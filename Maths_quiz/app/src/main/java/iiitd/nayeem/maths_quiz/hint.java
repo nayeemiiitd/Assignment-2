@@ -14,6 +14,9 @@ public class hint extends AppCompatActivity
     private TextView mhint_text;
     private int check_hint=0;
     public final static String EXTRA_MESSAGE = "iiitd.nayeem.maths_quiz.hint";
+    public final static String EXTRA_MESSAGE1 = "iitd.nayeem.maths_quiz.hint";
+    public final static String EXTRA_MESSAGE2 = "itd.nayeem.maths_quiz.hint";
+    private int n1,q1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +37,10 @@ public class hint extends AppCompatActivity
         }
         else
             mhint_text.setVisibility(View.INVISIBLE);
+
+        Intent Hintent = getIntent();
+        n1 = Hintent.getIntExtra(MainActivity.EXTRA_MESSAGE,1);
+        q1 = Hintent.getIntExtra(MainActivity.EXTRA_MESSAGE1,1);
 
         mhints.setOnClickListener(new View.OnClickListener()
         {
@@ -83,7 +90,9 @@ public class hint extends AppCompatActivity
     {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_MESSAGE,check_hint);  //hint is called
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(EXTRA_MESSAGE1,n1);
+        intent.putExtra(EXTRA_MESSAGE2,q1);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 

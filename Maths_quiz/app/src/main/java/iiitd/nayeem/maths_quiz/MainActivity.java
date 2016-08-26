@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,12 +22,16 @@ public class MainActivity extends AppCompatActivity
     private Boolean result;
     private int button_check;
     public final static String EXTRA_MESSAGE = "iiitd.nayeem.maths_quiz.MainActivity";
+    public final static String EXTRA_MESSAGE1 = "iitd.nayeem.maths_quiz.MainActivity";
+    public final static String EXTRA_MESSAGE2 = "itd.nayeem.maths_quiz.MainActivity";
+    public final String TAG = "Quiz";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG,"oncreate called");
 
         true_button =(Button) findViewById(R.id.correct);
         false_button = (Button) findViewById(R.id.incorrect);
@@ -47,10 +52,48 @@ public class MainActivity extends AppCompatActivity
         }
         else
         {
-            number = generateNumber();
-            set_question_number(question_counter);
-            question_counter++;
-            set_question(number);
+            int check=0;
+            Intent Hintent = getIntent();
+            Intent Cintent = getIntent();
+            Log.d(TAG,Hintent.toString()+"  Hintent");
+            Log.d(TAG,Cintent.toString() + " Cintent");
+            if(Hintent!=null && Hintent.getIntExtra(hint.EXTRA_MESSAGE1,0)!=0)
+            {
+                int Hresult = Hintent.getIntExtra(hint.EXTRA_MESSAGE,0);
+                int r =Hintent.getIntExtra(hint.EXTRA_MESSAGE1,0);
+                question_counter = Hintent.getIntExtra(hint.EXTRA_MESSAGE2,0);
+                Log.d(TAG,String.valueOf(r) + "Hint");
+                set_question(r);
+                set_question_number(question_counter-1);
+                if(Hresult!=0)
+                {
+                    minfo.setVisibility(View.VISIBLE);
+                    minfo.setText(R.string.hint_info);
+                }
+                check++;
+            }
+            if(Cintent!=null && Cintent.getIntExtra(cheat.EXTRA_MESSAGE1,0)!=0)
+            {
+                int Cresult = Cintent.getIntExtra(cheat.EXTRA_MESSAGE, 0);
+                int n = Cintent.getIntExtra(cheat.EXTRA_MESSAGE1, 0);
+                question_counter = Cintent.getIntExtra(cheat.EXTRA_MESSAGE2, 0);
+                Log.d(TAG, String.valueOf(n) + "Cheat");
+                set_question(n);
+                set_question_number(question_counter-1);
+                if (Cresult != 0) {
+                    minfo.setVisibility(View.VISIBLE);
+                    minfo.setText(R.string.cheat_info);
+                }
+                check++;
+            }
+            if(check==0)
+            {
+                number = generateNumber();
+                Log.d(TAG,String.valueOf(number) + "else");
+                set_question_number(question_counter);
+                question_counter++;
+                set_question(number);
+            }
         }
 
         true_button.setOnClickListener(new View.OnClickListener()
@@ -132,9 +175,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {  //calling hint activity
-                minfo.setVisibility(View.VISIBLE);
-                minfo.setText(R.string.hint_info);
                 Intent hint_intent = new Intent(v.getContext(), hint.class);
+                hint_intent.putExtra(EXTRA_MESSAGE,number);
+                hint_intent.putExtra(EXTRA_MESSAGE1,question_counter);
                 startActivity(hint_intent);
             }
         });
@@ -144,11 +187,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {  //calling cheat activity
-                minfo.setVisibility(View.VISIBLE);
-                minfo.setText(R.string.cheat_info);
                 Intent cheat_intent = new Intent(v.getContext(),cheat.class);
                 result = check(number);
                 cheat_intent.putExtra(EXTRA_MESSAGE,result);
+                cheat_intent.putExtra(EXTRA_MESSAGE1,number);
+                cheat_intent.putExtra(EXTRA_MESSAGE2,question_counter);
                 startActivity(cheat_intent);
             }
         });
@@ -199,48 +242,42 @@ public class MainActivity extends AppCompatActivity
     {
         savedInstanceState.putInt("counter",question_counter-1);
         savedInstanceState.putInt("question", number);
+        Log.d(TAG,"onsaveinstance  called");
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public void onStart()  //taking the intent values from both the activities
     {
-        Intent Hintent = getIntent();
-        int Hresult = Hintent.getIntExtra(hint.EXTRA_MESSAGE,0);
-        if(Hresult!=0) {
-            minfo.setVisibility(View.VISIBLE);
-            minfo.setText(R.string.hint_info);
-        }
-
-        Intent Cintent = getIntent();
-        int Cresult = Cintent.getIntExtra(cheat.EXTRA_MESSAGE,0);
-        if(Cresult!=0)
-            minfo.setText(R.string.cheat_info);
-
+        Log.d(TAG,"onstart called");
         super.onStart();
     }
 
     @Override
     public void onPause()
     {
+        Log.d(TAG,"onpause called");
         super.onPause();
     }
 
     @Override
     public void onResume()
     {
+        Log.d(TAG,"onresume called");
         super.onResume();
     }
 
     @Override
     public void onStop()
     {
+        Log.d(TAG,"onstop called");
         super.onStop();
     }
 
     @Override
     public void onDestroy()
     {
+        Log.d(TAG,"ondestroy called");
         super.onDestroy();
     }
 

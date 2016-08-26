@@ -14,7 +14,10 @@ public class cheat extends AppCompatActivity {
     private TextView mcheatResult,mcheat_text;
     private int check_cheat=0;
     public final static String EXTRA_MESSAGE = "iiitd.nayeem.maths_quiz.cheat";
+    public final static String EXTRA_MESSAGE1 = "iitd.nayeem.maths_quiz.cheat";
+    public final static String EXTRA_MESSAGE2 = "itd.nayeem.maths_quiz.cheat";
     private Boolean Mresult;
+    private int num,que;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +53,8 @@ public class cheat extends AppCompatActivity {
 
         Intent Mintent = getIntent();
         Mresult = Mintent.getBooleanExtra(MainActivity.EXTRA_MESSAGE,true);
+        num = Mintent.getIntExtra(MainActivity.EXTRA_MESSAGE1,1);
+        que = Mintent.getIntExtra(MainActivity.EXTRA_MESSAGE2,1);
 
         mcheats.setOnClickListener(new View.OnClickListener()
         {
@@ -102,7 +107,9 @@ public class cheat extends AppCompatActivity {
     {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_MESSAGE,check_cheat);  //cheat is called
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(EXTRA_MESSAGE1,num);
+        intent.putExtra(EXTRA_MESSAGE2,que);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
