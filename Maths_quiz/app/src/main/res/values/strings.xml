@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Maths Quiz</string>
+    <string name="title">Question</string>
+    <string name="question_number">0</string>
+    <string name="question">Question_text</string>
+    <string name="correct">TRUE</string>
+    <string name="incorrect">FALSE</string>
+    <string name="next">NEXT</string>
+    <string name="hint">Try to check divisibility by 2,3,5 and 7</string>
+    <string name="answer">The answer is :</string>
+    <string name="result">True</string>
+    <string name="hinter">Show Hint</string>
+    <string name="cheater">Show Cheat</string>
+    <string name="hint_info">Hint is being called</string>
+    <string name="cheat_info">Cheat is being used</string>
+</resources>
