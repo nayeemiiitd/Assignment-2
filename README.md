@@ -9,4 +9,4 @@ Adding hint and cheat activities
 * Phone gets a small vibration for wrong answer.
 * Question number is added.
 * Buttons gets disable on once answering the question except next button.
-*
+
